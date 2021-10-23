@@ -28,7 +28,7 @@ int main(){
             printf("O código %i significa: Cuide dos Idosos \n", n1);
             break;
         case 5:
-            printf("O código %i significa: Cultive pasciência \n", n1);
+            printf("O código %i significa: Cultive Paciência \n", n1);
             break;
         case 6:
             printf("O código %i significa: Cultive sabedoria \n", n1);
