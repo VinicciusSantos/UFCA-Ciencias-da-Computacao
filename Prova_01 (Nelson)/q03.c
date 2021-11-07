@@ -35,24 +35,25 @@ int main(){
         scanf("%i", &vacina);
 
         if (sexo == 1) // homem
+        {
             idade_masc += idade;
             masc++;
             if (vacina == 2)
-                m_sem_vacina++;
-
+                h_com_vacina++;
+        }
         else if (sexo == 2) // Mulher
-            idade_fem += idade;
+        {   idade_fem += idade;
             fem++;
             if (vacina == 1)
-                h_com_vacina++;
-
+                m_sem_vacina++;
+        }
         cont++;
     }
 
     media_fem = idade_fem / fem;
     media_masc = idade_masc / masc;
-    porc_masc = h_com_vacina * 100 / n;
-    porc_fem = m_sem_vacina * 100 / n;
+    porc_masc = h_com_vacina * 100 / masc;
+    porc_fem = m_sem_vacina * 100 / fem;
     
     printf("%i\n", idade_fem);
     printf("%i\n", fem);
