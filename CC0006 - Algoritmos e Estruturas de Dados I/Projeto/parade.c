@@ -150,4 +150,7 @@ int acessarIndice(Lista * li, int indice)
     return 3;
 }
 
-int quantidade(Lista *)
+int quantidade(Lista * li)
+{
+    return 0;
+}
