@@ -1,0 +1,100 @@
+Parade
+
+Enviar grupos por e-mail até as 23h59 de 17/05/2022 para roberto.hugo@ufca.edu.br. Até três pessoas por grupo.
+
+Entrega do Projeto também por e-mail, até as 23h59 de 03/07/2022. Deverá conter um único arquivo compactado contendo todos os códigos fontes e no corpo do e-mail os membros da equipe. Cópias serão zeradas (original e cópia). Copiar da Internet também é cópia, então, cuidado.
+
+Apresentação do Projeto está agendada para 07/07/2022 no horário da aula normal.
+
+Dúvidas também podem enviar por e-mail, tirar na aula ou em horário de atendimento.
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Estruturas que deverão ser criadas usando TAD:
+- Lista Dinâmica
+	-> Lista * criar()
+	-> int inserirInicio(Lista *, struct carta)
+	-> int removerQualquer(Lista *, struct carta) // Remove exatamente o cara passado
+	-> int acessarIndice(Lista *, int) // Acessa indice específico
+	-> int quantidade(Lista *)
+	-> int somaValores(Lista *) // Soma os valores das cartas de uma lista
+- Pilha Dinâmica
+	-> Pilha * criar()
+	-> int inserir(Pilha *, struct carta)
+	-> int remover(Pilha *, struct carta *) // Já remove e acessa
+	-> void embaralhar(Pilha *)
+	-> int tamanho(Pilha *)
+Essas são as funções mínimas do TAD para o projeto funcionar. Todas deverão ser implementadas.
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Estruturas necessárias no main:
+- Mão (Lista *), sempre com cinco cartas: joga uma e compra uma.
+- Mesa (Lista *), inicia com cinco cartas, mas varia no andar da partida.
+- Baralho (Pilha *), inicia com 66 cartas embaralhadas, depois distribui 5 pro jogador e 5 pra mesa.
+- Coleção do Jogador (Lista **), um vetor de listas inicialmente vazias
+- Coleção do Computador (Lista **), um vetor de listas inicialmente vazias
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Estrutura da carta:
+- int numero, número que varia de 0 a 10
+- char naipe, naipe/cor que varia de A a F
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Vídeo explicando o jogo original: https://www.youtube.com/watch?v=M4rGJDqmOSU
+
+Lembrando que o projeto é o jogo adaptado para um jogador com o computador jogando aleatoriamente
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Avaliação do Projeto:
+Boas práticas (1,5) Vários trechos desse projeto podem ser feitos na força bruta, replicagem eterna de código e outras má práticas. Faça um código generalizado, compreensível e sem gambiarras.
+Preparação (1,5) Tudo inicializado corretamente (Mão, Mesa, Coleções e Baralho) e aleatoriamente quando for o caso (Mão, Mesa e Baralho). São 66 cartas ao todo: 6 cores (recomendo usar letras A - F) e 11 números (0 - 10), uma carta de cada combinação (cor e número).
+Validação (0,5) Permitir apenas ações que sigam as regras. Isto é, jogador só pode escolher cartas da mão válidas.
+Implementar TAD corretamente (2,0) Respeitar todos os conceitos de TAD, propriedades e implementar corretamente todas as estruturas listadas neste documento.
+Turno (1,5) Vez do Jogador e depois vez do Computador. Jogador joga uma carta da Mão e adquire uma nova do Baralho, depois Computador joga a carta do topo do Baralho. Cartas coletadas vão para as respectivas Coleções de quem fez a jogada.
+Tela da partida (1,5) Imprimir o tabuleiro corretamente com todas as informações necessárias e todas as opções possíveis.
+Final da Partida (1,5) Saber quando terminar a partida e indicar corretamente se o jogador perdeu, fez pontos, venceu ou venceu perfeitamente, sendo respectivamente: ter todas as cores na coleção, jogou até ficar com as 4 cartas e baixar 2 na mesa, jogou até ficar com 4 cartas e na coleção tinha zero pontos, jogou até ficar com 4 cartas e na coleção tinha zero pontos e na mão tinha dois zeros. Dizer a pontuação do jogador no segundo caso de fim de partida.
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Sobre como usar scanf sem bugar loucamente caso você digite coisas demais, basta colocar isso após um:
+while( getchar() != '\n' );
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Tela (sugestão de como organizar, mas fique a vontade):
+
+[NOVA CARTA] -> [5 A] -> [6 B] -> [9 A] -> [3 F] -> [8 C] | Baralho (56 cartas)
+
+Coleção:
+A -> Vazio
+B -> Vazio
+C -> Vazio
+D -> Vazio
+E -> Vazio
+F -> Vazio
+
+Mão: [3 B] -> [2 B] -> [8 A] -> [4 D] -> [9 D]
+      (1)      (2)      (3)      (4)      (5)
+
+Escolha qual carta da sua mão será a NOVA CARTA...
+-> 
+
+-=-=-=-=-=-=-=-=-=-=-
+
+Exemplo de turno:
+
+Dado a tela acima, o jogador digitou 2, então Mesa atualiza:
+[NOVA CARTA] -> [2 B] -> [5 A] -> [6 B] -> [9 A] -> [3 F] -> [8 C] | Baralho (55 cartas)
+
+- Ficaram 55 cartas, pois o jogador já comprou uma nova carta.
+- Jogador não pegou nenhuma carta, pois o 2 protege o [5 A] e [6 B], não restando nenhuma carta na lista que possua valor igual ou menor ou que seja da mesma cor (letra).
+
+Na sequência, o computador joga aleatoriamente a carta do topo, resultando em:
+[NOVA CARTA] -> [3 C] -> [2 B] -> [5 A] -> [6 B] -> [9 A] -> [3 F] -> [8 C] | Baralho (54 cartas)
+Perceba que as cartas [3 F] e [8 C] foram removidas, pois não estavam protegidas e tinham valores iguais ou menores ou eram da mesma cor.
+
+E assim, segue a partida, até o final. Se houver contagem de pontos, o Jogador pontua o somatório dos números que possui. Exceto as cores que ele possuir mais cartas (daquela cor) que o Computador. Estes ele pontua apenas a quantidade de cartas daquela cor (ignorando seus valores).
