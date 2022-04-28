@@ -95,6 +95,8 @@ void removerValor(Lista* li, int valor)
     {
         ((*li)->prox)->ant = (*li)->ant;
         *li = (*li)->prox;
+        printf("Elemento <%d> removido!\n", valor);
+        return;
     }
 
     Elemento *aux, *ant;
@@ -110,11 +112,12 @@ void removerValor(Lista* li, int valor)
                 (aux->prox)->ant = aux->ant;
             }
             ant->prox = aux->prox;
+            printf("Elemento <%d> removido!\n", valor);
+            return;
         }
         ant = aux;
         aux = aux->prox;
     }
-    
 }
 
 void imprimir(Lista* li)
@@ -135,5 +138,32 @@ void imprimir(Lista* li)
     }
 
     printf("||\n");
+    return;
+}
+
+void imprimirInvertido(Lista* li)
+{
+    if (li == NULL)
+    {
+        printf("Não foi possível acessar a lista\n");
+        return;
+    }
+
+    Elemento *aux;
+    aux = *li;
+
+    printf("||");
+    while (aux->prox != NULL)
+    {
+        aux = aux->prox;
+    }
+
+    while (aux != NULL)
+    {
+        printf(" <- %d ", aux->valor);
+        aux = aux->ant;
+    }
+
+    printf("\n");
     return;
 }

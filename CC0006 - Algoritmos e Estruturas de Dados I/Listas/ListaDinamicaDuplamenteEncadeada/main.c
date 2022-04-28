@@ -14,6 +14,5 @@ int main(void)
     inserirOrdenado(li, 7);
     imprimir(li);
 
-    removerValor(li, 8547);
-    imprimir(li);
+    imprimirInvertido(li);
 }
