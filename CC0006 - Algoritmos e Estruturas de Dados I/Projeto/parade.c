@@ -234,7 +234,7 @@ void Pi_imprimir(Pilha *pi)
 {
     if (pi == NULL)
     {
-        printf("Não foi possível acessar a pilha\n");
+        printf("Não foi possível acessar a pilha!\n");
         return;
     }
 
@@ -252,13 +252,22 @@ void Pi_imprimir(Pilha *pi)
     printf("|\n");   
 }
 
-int Pi_remover(Pilha *pi)
+struct carta Pi_remover(Pilha *pi)
 {
-    if (pi == NULL)
+    struct carta novo;
+    if (pi == NULL || *pi == NULL)
     {
-        printf("Não foi possível acessar a pilha\n");
-        return -1;
+        printf("Não foi possível remover da pilha!\n");
+        return novo;
     }
+
+    Elemento *aux = *pi;
+    novo = (*pi)->car;
+    *pi = (*pi)->proximo;
+    free(aux);
+    
+    printf("Carta removida: [%d %c]\n", novo.numero, novo.naipe);
+    return novo;
 }
 
 int Pi_tamanho(Pilha *pi)

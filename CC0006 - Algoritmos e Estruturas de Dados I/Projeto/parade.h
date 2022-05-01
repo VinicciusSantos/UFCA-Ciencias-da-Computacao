@@ -18,7 +18,7 @@ typedef struct elemento* Pilha;
 
 Pilha* Pi_criar();
 int Pi_inserir(Pilha *, struct carta);
-int Pi_remover(Pilha *);
+struct carta Pi_remover(Pilha *);
 int Pi_tamanho(Pilha *);
 void Pi_imprimir(Lista *);
 void Pi_embaralhar(Pilha *);

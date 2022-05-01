@@ -32,7 +32,8 @@ int main(void)
     Pi_inserir(p, b);
     Pi_inserir(p, c);
     Pi_inserir(p, d);
+
+    Pi_remover(p);
     Pi_imprimir(p);
-    Pi_tamanho(p);
     return 0;
 }
