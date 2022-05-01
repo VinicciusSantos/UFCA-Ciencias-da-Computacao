@@ -230,28 +230,6 @@ int Pi_inserir(Pilha *pi, struct carta novaCarta)
     return 0;
 }
 
-void Pi_imprimir(Pilha *pi)
-{
-    if (pi == NULL)
-    {
-        printf("Não foi possível acessar a pilha!\n");
-        return;
-    }
-
-    Elemento *aux;
-    aux = *pi;
-
-    printf("(PILHA) -> ");
-    while (aux != NULL)
-    {
-        printf("[%d %c] ", aux->car.numero, aux->car.naipe);
-        if (aux->proximo != NULL) printf("-> ");
-        aux = aux->proximo;
-    }
-
-    printf("|\n");   
-}
-
 struct carta Pi_remover(Pilha *pi)
 {
     struct carta novo;
@@ -268,6 +246,15 @@ struct carta Pi_remover(Pilha *pi)
     
     printf("Carta removida: [%d %c]\n", novo.numero, novo.naipe);
     return novo;
+}
+
+void Pi_embaralhar(Pilha *pi)
+{
+    if (pi == NULL)
+    {
+        printf("Não foi possível acessar a pilha\n");
+        return;
+    }
 }
 
 int Pi_tamanho(Pilha *pi)
@@ -292,11 +279,24 @@ int Pi_tamanho(Pilha *pi)
     return cont;
 }
 
-void Pi_embaralhar(Pilha *pi)
+void Pi_imprimir(Pilha *pi)
 {
     if (pi == NULL)
     {
-        printf("Não foi possível acessar a pilha\n");
+        printf("Não foi possível acessar a pilha!\n");
         return;
     }
+
+    Elemento *aux;
+    aux = *pi;
+
+    printf("(PILHA) -> ");
+    while (aux != NULL)
+    {
+        printf("[%d %c] ", aux->car.numero, aux->car.naipe);
+        if (aux->proximo != NULL) printf("-> ");
+        aux = aux->proximo;
+    }
+
+    printf("|\n");   
 }
