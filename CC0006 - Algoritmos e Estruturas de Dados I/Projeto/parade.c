@@ -10,7 +10,9 @@ struct elemento
 
 typedef struct elemento Elemento;
 
-Lista *criar()
+// -=- Funçoes para a criaçao e manipulaçao de LISTAS -=-
+
+Lista *Li_criar()
 {
     Lista* li;
     li = (Lista*)malloc(sizeof(Lista));
@@ -25,7 +27,7 @@ Lista *criar()
     return li;
 }
 
-int inserirInicio(Lista *li, struct carta novaCarta)
+int Li_inserirInicio(Lista *li, struct carta novaCarta)
 {
     if (li == NULL)
     {
@@ -46,11 +48,11 @@ int inserirInicio(Lista *li, struct carta novaCarta)
     *li = novo;
     novo->car = novaCarta;
 
-    printf("Carta <%d%c> adicionada com sucesso!\n", novaCarta.valor, novaCarta.cor);
+    printf("Carta <%d %c> adicionada na lista!\n", novaCarta.numero, novaCarta.naipe);
     return 0;
 }
 
-void imprimir(Lista * li)
+void Li_imprimir(Lista * li)
 {
     if (li == NULL)
     {
@@ -59,26 +61,20 @@ void imprimir(Lista * li)
     }
 
     Elemento *aux;
-    aux = (Elemento*)malloc(sizeof(Elemento));
-
-    if (aux == NULL)
-    {
-        printf("Não foi possível imprimir\n");
-        return;
-    }
-
     aux = *li;
 
+    printf("(LISTA) -> ");
     while (aux != NULL)
     {
-        printf("%d%c -> ", aux->car.valor, aux->car.cor);
+        printf("[%d %c] ", aux->car.numero, aux->car.naipe);
+        if (aux->proximo != NULL) printf("-> ");
         aux = aux->proximo;
     }
 
-    printf("||\n");   
+    printf("|\n");   
 }
 
-int removerQualquer(Lista * li, struct carta carta)
+int Li_removerQualquer(Lista * li, struct carta carta)
 {
     if (li == NULL)
     {
@@ -101,7 +97,7 @@ int removerQualquer(Lista * li, struct carta carta)
 
     while (aux != NULL)
     {
-        if (aux->car.cor == carta.cor && aux->car.valor == carta.valor)
+        if (aux->car.naipe == carta.naipe && aux->car.numero == carta.numero)
         {
             anterior->proximo = aux->proximo;
         }
@@ -109,11 +105,11 @@ int removerQualquer(Lista * li, struct carta carta)
         anterior = aux;
         aux = aux->proximo;
     }
-    printf("Carta <%d%c> removida com sucesso!\n", carta.valor, carta.cor);
+    printf("Carta <%d%c> removida com sucesso!\n", carta.numero, carta.naipe);
     return 0;
 }
 
-int acessarIndice(Lista * li, int indice)
+int Li_acessarIndice(Lista * li, int indice)
 {
     if (li == NULL)
     {
@@ -138,7 +134,7 @@ int acessarIndice(Lista * li, int indice)
     {
         if (cont == indice)
         {
-            printf("Carta do índice <%d> é: <%d%c>\n", cont, aux->car.valor, aux->car.cor);
+            printf("Carta do índice <%d> é: <%d%c>\n", cont, aux->car.numero, aux->car.naipe);
             return 0;
         }
 
@@ -150,7 +146,148 @@ int acessarIndice(Lista * li, int indice)
     return 3;
 }
 
-int quantidade(Lista * li)
+int Li_quantidade(Lista * li)
 {
+    if (li == NULL)
+    {
+        printf("Não foi possível acessar a lista\n");
+        return -1;
+    }
+
+    Elemento *aux;
+    aux = *li;
+
+    int cont = 0;
+    while (aux != NULL)
+    {
+        cont++;
+        aux = aux->proximo;
+    }
+
+    printf("Quantidade: %d\n", cont);
+    return cont;
+}
+
+int Li_somaValores(Lista *li)
+{
+    if (li == NULL)
+    {
+        printf("Não foi possível acessar a lista\n");
+        return -1;
+    }
+
+    Elemento *aux;
+    aux = *li;
+
+    int soma = 0;
+    while (aux != NULL)
+    {
+        soma += aux->car.numero;
+        aux = aux->proximo;
+    }
+    printf("Soma: %d\n", soma);
+    return soma;
+} 
+
+// -=- Funçoes para a criaçao e manipulaçao de PILHAS -=-
+
+Pilha *Pi_criar()
+{
+    Pilha* pi;
+    pi = (Pilha*)malloc(sizeof(Pilha));
+
+    if (pi == NULL)
+    {
+        printf("Não foi possivel criar a pilha!\n");
+        return pi;
+    }
+    printf("Pilha criada!\n");
+    *pi = NULL;
+    return pi;
+}
+
+int Pi_inserir(Pilha *pi, struct carta novaCarta)
+{
+    if (pi == NULL)
+    {
+        printf("Não foi possivel acessar a pilha!\n");
+        return 1;
+    }
+
+    Elemento *novo;
+    novo = (Elemento*)malloc(sizeof(Elemento));
+
+    if (novo == NULL)
+    {
+        printf("Não foi possivel inserir o elemento!\n");
+        return 2;
+    }
+
+    novo->proximo = *pi;
+    *pi = novo;
+    novo->car = novaCarta;
+    printf("Carta <%d %c> adicionada na pilha!\n", novaCarta.numero, novaCarta.naipe);
     return 0;
+}
+
+void Pi_imprimir(Pilha *pi)
+{
+    if (pi == NULL)
+    {
+        printf("Não foi possível acessar a pilha\n");
+        return;
+    }
+
+    Elemento *aux;
+    aux = *pi;
+
+    printf("(PILHA) -> ");
+    while (aux != NULL)
+    {
+        printf("[%d %c] ", aux->car.numero, aux->car.naipe);
+        if (aux->proximo != NULL) printf("-> ");
+        aux = aux->proximo;
+    }
+
+    printf("|\n");   
+}
+
+int Pi_remover(Pilha *pi)
+{
+    if (pi == NULL)
+    {
+        printf("Não foi possível acessar a pilha\n");
+        return -1;
+    }
+}
+
+int Pi_tamanho(Pilha *pi)
+{
+    if (pi == NULL)
+    {
+        printf("Não foi possível acessar a pilha\n");
+        return -1;
+    }
+
+    Elemento *aux;
+    aux = *pi;
+
+    int cont = 0;
+    while (aux != NULL)
+    {
+        cont++;
+        aux = aux->proximo;
+    }
+
+    printf("Quantidade: %d\n", cont);
+    return cont;
+}
+
+void Pi_embaralhar(Pilha *pi)
+{
+    if (pi == NULL)
+    {
+        printf("Não foi possível acessar a pilha\n");
+        return;
+    }
 }

@@ -5,34 +5,31 @@
 int main(void)
 {
     Lista *l;
-    l = criar();
-    
+    Pilha *p;
+    l = Li_criar();
+    p = Pi_criar();
+
     struct carta a;
-    a.valor = 5;
-    a.cor = 'a';
+    a.numero = 5;
+    a.naipe = 'a';
 
     struct carta b;
-    b.valor = 8;
-    b.cor = 'f';
+    b.numero = 8;
+    b.naipe = 'f';
 
     struct carta c;
-    c.valor = 0;
-    c.cor = 'c';
+    c.numero = 0;
+    c.naipe = 'c';
 
     struct carta d;
-    d.valor = 7;
-    d.cor = 'd';
+    d.numero = 7;
+    d.naipe = 'd';
 
-    inserirInicio(l, a);
-    inserirInicio(l, b);
-    inserirInicio(l, c);
-    inserirInicio(l, d);
-    imprimir(l);
-    printf("\n");
-
-    removerQualquer(l, c);
-    imprimir(l);
-
-    acessarIndice(l, 1);
+    Pi_inserir(l, a);
+    Pi_inserir(l, b);
+    Pi_inserir(l, c);
+    Pi_inserir(l, d);
+    Pi_imprimir(l);
+    Pi_tamanho(p);
     return 0;
 }
