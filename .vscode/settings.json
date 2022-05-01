@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "parade.h": "c"
+        "parade.h": "c",
+        "stdlib.h": "c"
     }
 }
