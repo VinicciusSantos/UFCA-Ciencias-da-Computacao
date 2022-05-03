@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "parade.h"
+#include <time.h>
 
 // cd Documentos/GitHub/UFCA-Ciencias-da-Computacao/CC0006\ -\ Algoritmos\ e\ Estruturas\ de\ Dados\ I/Projeto/
 // gcc -c main.c parade.c && gcc -o main main.o parade.o && ./main
@@ -12,28 +13,28 @@ int main(void)
     l = Li_criar();
     p = Pi_criar();
 
-    struct carta a;
-    a.numero = 5;
-    a.naipe = 'a';
+    // Criando as 66 cartas:
+    char naipes[] = {'a', 'b', 'c', 'd', 'e', 'f'}; 
+    for (int j = 0; j < 6; j++)
+    {
+        for (int i = 0; i < 11; i++)
+        {
+            struct carta a = {i, naipes[j]};
+            Pi_inserir(p, a);
+        }
+    }
 
-    struct carta b;
-    b.numero = 8;
-    b.naipe = 'f';
+    printf("Tamanho: %d\n", Pi_tamanho(p));
 
-    struct carta c;
-    c.numero = 0;
-    c.naipe = 'c';
+    Pi_imprimir(p);
 
-    struct carta d;
-    d.numero = 7;
-    d.naipe = 'd';
+    Pi_embaralhar(p);
+    Pi_imprimir(p);
 
-    Pi_inserir(p, a);
-    Pi_inserir(p, b);
-    Pi_inserir(p, c);
-    Pi_inserir(p, d);
+    Pi_embaralhar(p);
+    Pi_imprimir(p);
 
-    Pi_remover(p);
+    Pi_embaralhar(p);
     Pi_imprimir(p);
     return 0;
 }
