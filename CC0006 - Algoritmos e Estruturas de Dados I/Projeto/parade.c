@@ -21,10 +21,10 @@ Lista *Li_criar()
 
     if (li == NULL)
     {
-        printf("Não foi possivel criar a lista!\n");
+        // printf("Não foi possivel criar a lista!\n");
         return li;
     }
-    printf("Lista criada!\n");
+    // printf("Lista criada!\n");
     *li = NULL;
     return li;
 }
@@ -33,7 +33,7 @@ int Li_inserirInicio(Lista *li, struct carta novaCarta)
 {
     if (li == NULL)
     {
-        printf("Não foi possível acessar a lista\n");
+        // printf("Não foi possível acessar a lista\n");
         return 1;
     }
 
@@ -42,7 +42,7 @@ int Li_inserirInicio(Lista *li, struct carta novaCarta)
 
     if (novo == NULL)
     {
-        printf("Não foi possível inserir o elemento\n");
+        // printf("Não foi possível inserir o elemento\n");
         return 2;
     }
 
@@ -50,7 +50,7 @@ int Li_inserirInicio(Lista *li, struct carta novaCarta)
     *li = novo;
     novo->car = novaCarta;
 
-    printf("Carta <%d %c> adicionada na lista!\n", novaCarta.numero, novaCarta.naipe);
+    // printf("Carta <%d %c> adicionada na lista!\n", novaCarta.numero, novaCarta.naipe);
     return 0;
 }
 
@@ -65,15 +65,13 @@ void Li_imprimir(Lista * li)
     Elemento *aux;
     aux = *li;
 
-    printf("(LISTA) -> ");
     while (aux != NULL)
     {
         printf("[%d %c] ", aux->car.numero, aux->car.naipe);
-        if (aux->proximo != NULL) printf("-> ");
+        if (aux->proximo != NULL) printf(" -> ");
         aux = aux->proximo;
     }
-
-    printf("|\n");   
+    printf("| ");   
 }
 
 int Li_removerQualquer(Lista * li, struct carta carta)
@@ -200,10 +198,10 @@ Pilha *Pi_criar()
 
     if (pi == NULL)
     {
-        printf("Não foi possivel criar a pilha!\n");
+        // printf("Não foi possivel criar a pilha!\n");
         return pi;
     }
-    printf("Pilha criada!\n");
+    // printf("Pilha criada!\n");
     *pi = NULL;
     return pi;
 }
@@ -283,15 +281,13 @@ void Pi_imprimir(Pilha *pi)
     Elemento *aux;
     aux = *pi;
 
-    printf("(PILHA) -> ");
     while (aux != NULL)
     {
         printf("[%d %c] ", aux->car.numero, aux->car.naipe);
         if (aux->proximo != NULL) printf("-> ");
         aux = aux->proximo;
     }
-
-    printf("|\n");   
+    printf("| ");   
 }
 
 void Pi_InserirIndice(Pilha* pi, struct carta novaCarta, int indice)
