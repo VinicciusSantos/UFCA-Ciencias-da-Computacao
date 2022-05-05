@@ -68,7 +68,7 @@ void Li_imprimir(Lista * li)
     while (aux != NULL)
     {
         printf("[%d %c] ", aux->car.numero, aux->car.naipe);
-        if (aux->proximo != NULL) printf(" -> ");
+        if (aux->proximo != NULL) printf("-> ");
         aux = aux->proximo;
     }
     printf("| ");   
@@ -80,6 +80,12 @@ int Li_removerQualquer(Lista * li, struct carta carta)
     {
         printf("Não foi possível acessar a lista\n");
         return 1;
+    }
+
+    if (((*li)->car.numero == carta.numero) && ((*li)->car.naipe == carta.naipe))
+    {
+        *li = (*li)->proximo;
+        return 0;
     }
 
     Elemento *aux, *anterior;
@@ -105,52 +111,49 @@ int Li_removerQualquer(Lista * li, struct carta carta)
         anterior = aux;
         aux = aux->proximo;
     }
-    printf("Carta <%d%c> removida com sucesso!\n", carta.numero, carta.naipe);
+    //printf("Carta <%d %c> removida com sucesso!\n", carta.numero, carta.naipe);
     return 0;
 }
 
-int Li_acessarIndice(Lista * li, int indice)
+struct carta Li_acessarIndice(Lista * li, int indice)
 {
+    struct carta c;
     if (li == NULL)
     {
-        printf("Não foi possível acessar a lista\n");
-        return 1;
+        // printf("Não foi possível acessar a lista\n");
+        return c;
+    }
+
+    if (indice == 0)
+    {
+        return (*li)->car;
     }
 
     Elemento *aux;
-    aux = (Elemento*)malloc(sizeof(Elemento));
-
-    if (aux == NULL)
-    {
-        printf("Não foi possível imprimir\n");
-        return 2;
-    }
-
     aux = *li;
 
     int cont = 0;
-
     while (aux != NULL)
     {
         if (cont == indice)
         {
-            printf("Carta do índice <%d> é: <%d%c>\n", cont, aux->car.numero, aux->car.naipe);
-            return 0;
+            // printf("Carta do índice <%d> é: <%d%c>\n", cont, aux->car.numero, aux->car.naipe);
+            c = aux->car;
+            return c;
         }
-
         cont++;
         aux = aux->proximo;
     }
 
     printf("Carta não encontrada!\n");
-    return 3;
+    return c;
 }
 
 int Li_quantidade(Lista * li)
 {
     if (li == NULL)
     {
-        printf("Não foi possível acessar a lista\n");
+        // printf("Não foi possível acessar a lista\n");
         return -1;
     }
 
@@ -164,7 +167,7 @@ int Li_quantidade(Lista * li)
         aux = aux->proximo;
     }
 
-    printf("Quantidade: %d\n", cont);
+    // printf("Quantidade: %d\n", cont);
     return cont;
 }
 
