@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "carta.h"
 #include "lista.h"
+#include "cores.h"
 #include <time.h>
 
 struct elemento
@@ -67,7 +68,7 @@ void Li_imprimir(Lista * li)
 
     while (aux != NULL)
     {
-        printf("[%d %c] ", aux->car.numero, aux->car.naipe);
+        printf("%s[%d %c]%s ", C_CYAN, aux->car.numero, aux->car.naipe, C_GRAY);
         if (aux->proximo != NULL) printf("-> ");
         aux = aux->proximo;
     }
