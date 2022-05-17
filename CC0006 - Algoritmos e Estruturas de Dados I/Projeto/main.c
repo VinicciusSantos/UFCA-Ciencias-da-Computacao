@@ -8,7 +8,7 @@
 
 # define QUANT_NAIPES 6
 # define QUANT_CARTAS 5
-# define CARTASPORNAIPE 11
+# define CARTASPORNAIPE 4
 # define QUANT_MAO 5
 # define QUANT_MESA 5
 
@@ -18,7 +18,7 @@ void imprimirColecao(Lista** colecao)
 {
     for (int i = 0; i < QUANT_NAIPES; i++)
     {
-        printf("\n%s%c%s -> ", C_BLUE, 'A'+i, C_GRAY);
+        printf("\n\033[3%dm%c%s -> ", i+1, 'A'+i, C_GRAY);
         if (Li_quantidade(colecao[i]) == 0) printf("Vazio");
         else Li_imprimir(colecao[i]);
     }
@@ -73,44 +73,47 @@ int main(void)
         rodada++;
         printf("Rodada: %d\n\n", rodada);
 
-        // Testando quatos naipes os jogadores tem:
+        // Testando quantos naipes os jogadores tem:
         int quant_cheiosJog = 0, quant_cheiosPc = 0;
         for (int i = 0; i < QUANT_NAIPES; i++)
         {
-            if (Li_quantidade(colecaoJogador[i]) > 0)
-                quant_cheiosJog++;
-            if (Li_quantidade(colecaoComputador[i]) > 0)
-                quant_cheiosPc++;
+            if (Li_quantidade(colecaoJogador[i]) > 0) quant_cheiosJog++;
+            if (Li_quantidade(colecaoComputador[i]) > 0) quant_cheiosPc++;
         }
 
-        // Testando se o jogador tem todos os naipes, caso afirmativo, VITORIA DO PC
-        if (quant_cheiosJog == QUANT_NAIPES)
+        // Testando os finais de jogo:
+        if (quant_cheiosJog == QUANT_NAIPES || quant_cheiosPc == QUANT_NAIPES || (Pi_tamanho(baralho) == 0 && (Li_quantidade(mao) == 4 && rodada % 2 == 1)))
         {
             system("clear");
-            vencedor = 2;
-            printf("Acabou pois o jogador tem cartas de todas as cores na colecao!\n");
-            break;
-        }
+            printf("%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n", C_RED);
+            printf("                      %sJogo Encerrado!\n", C_GRAY);
+            printf("%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-%s\n", C_RED, C_GRAY);
+            
+            // Se o jogador já tiver carta de todas as cores na coleção:
+            if (quant_cheiosJog == QUANT_NAIPES)
+            {
+                printf("Acabou pois o %sjogador%s tem cartas de todas as cores na colecao!\n", C_YELLOW, C_GRAY);
+                vencedor = 2;
+            }
 
-        // Testando se o jogador tem todos os naipes, caso afirmativo, VITORIA DO JOGADOR
-        if (quant_cheiosPc == QUANT_NAIPES)
-        {
-            system("clear");
-            vencedor = 1;
-            printf("Acabou pois o computador tem cartas de todas as cores na colecao!\n");
-            break;
-        }
+            // Se o computador já tiver carta de todas as cores na coleção:
+            if (quant_cheiosPc== QUANT_NAIPES)
+            {
+                printf("Acabou pois o %sjogador%s tem cartas de todas as cores na colecao!\n", C_YELLOW, C_GRAY);
+                vencedor = 1;
+            }
 
-        // Quando o baralho acabar e o jogador estiver com 0 cartas
-        if (Pi_tamanho(baralho) == 0 && (Li_quantidade(mao) == 4 && rodada % 2 == 1))
-        {
-            system("clear");
-            printf("Acabou pq tu pegou cartas de todas as cores!\n");
-            break;
+            // Quando o baralho acabar e o jogador estiver com 0 cartas:
+            if (Pi_tamanho(baralho) == 0 && (Li_quantidade(mao) == 4 && rodada % 2 == 1))
+            {
+                printf("O Jogador tem < %d > cartas e o Baralho tem < %d > cartas!\n", Li_quantidade(mao), Pi_tamanho(baralho));
+            }
+
+            break;  // Encerrando o while do jogo
         }
 
         // Imprimindo as cartas da mesa:
-        printf("%s[NOVA CARTA] %s-> ", C_YELLOW, C_GRAY);
+        printf("%s%s[NOVA CARTA] %s%s-> ", C_BOLD,C_YELLOW, C_GRAY, C_NONE);
         Li_imprimir(mesa);
         printf("Baralho (%d cartas)\n", Pi_tamanho(baralho));
 
@@ -136,7 +139,7 @@ int main(void)
             int escolha;
             do
             {
-                printf("\nEscolha qual carta da sua mão será a %s[NOVA CARTA]%s...\n", C_YELLOW, C_GRAY);
+                printf("\nEscolha qual carta da sua mão será a %s%s[NOVA CARTA]%s%s...\n", C_BOLD, C_YELLOW, C_GRAY, C_NONE);
                 printf("%s>>>%s ", C_YELLOW, C_GRAY);
                 scanf("%d", &escolha);
                 while(getchar() != '\n');
@@ -148,36 +151,40 @@ int main(void)
             // Removendo da mão e colocando na mesa:
             Li_removerQualquer(mao, escolhida);
             
-            printf("\n%s-=-=-=-=-=-=-%s CARTA %s-=-=-=-=-=-=-%s", C_YELLOW, C_GRAY, C_YELLOW, C_GRAY);
-            printf("\n%sCarta escolhida: %s[%d %c]\n", C_YELLOW, C_GRAY, escolhida.numero, escolhida.naipe);
+            printf("\n%s-=-=-=-=-=-=--=-=-=-=-%s CARTA %s-=-=-=-=-=-=--=-=-=-=-%s", C_RED, C_GRAY, C_RED, C_GRAY);
+            printf("\n%sCarta escolhida: \033[3%dm[%d %c]%s\n", C_GRAY, (escolhida.naipe - 'a')+1, escolhida.numero, escolhida.naipe, C_GRAY);
         }
 
         // Vez do computador:
         else 
         {
-            printf("\n%s-=-=-=-=-=-=-%s VEZ DO COMPUTADOR %s-=-=-=-=-=-=-%s", C_YELLOW, C_GRAY, C_YELLOW, C_GRAY);
-            escolhida = Pi_remover(baralho); 
-            printf("\n%sCarta escolhida: %s[%d %c]\n", C_YELLOW, C_GRAY, escolhida.numero, escolhida.naipe);
+            printf("\n%s-=-=-=-=-=-=--=-=-=-=-%s VEZ DO COMPUTADOR %s-=-=-=-=-=-=--=-=-=-=-%s", C_RED, C_GRAY, C_RED, C_GRAY);
+            if (Pi_tamanho(baralho) != 0)
+            {
+                escolhida = Pi_remover(baralho); 
+                printf("\n%sCarta escolhida: \033[3%dm[%d %c]%s\n", C_GRAY, (escolhida.naipe - 'a')+1, escolhida.numero, escolhida.naipe, C_GRAY);
+            }
+            else continue;
         }
 
         // Imprimindo as cartas protegidas:
-        printf("%sProtegidas: %s", C_YELLOW, C_GRAY);
-        if (escolhida.numero == 0) printf("Nenhuma");
+        printf("%sProtegidas: ", C_GRAY);
+        if (escolhida.numero == 0) printf("%sNenhuma%s", C_RED, C_GRAY);
         for (int i = 0; i < escolhida.numero; i++)
         {
             if (i > Li_quantidade(mesa)-1) break;
             struct carta c = Li_acessarIndice(mesa, i);
-            printf("[%d %c] ", c.numero, c.naipe);
+            printf("\033[3%dm[%d %c]%s ", (c.naipe-'a')+1, c.numero, c.naipe, C_GRAY);
         }
         printf("\n");
 
         // Imprimindo as cartas desprotegidas:
-        printf("%sDesprotegidas: %s", C_YELLOW, C_GRAY);
-        if (escolhida.numero > Li_quantidade(mesa)) printf("Nenhuma");
+        printf("%sDesprotegidas: ", C_GRAY);
+        if (escolhida.numero > Li_quantidade(mesa)) printf("%sNenhuma%s", C_RED, C_GRAY);
         for (int i = escolhida.numero; i < Li_quantidade(mesa); i++)
         {
             struct carta c = Li_acessarIndice(mesa, i);
-            printf("[%d %c] ", c.numero, c.naipe);
+            printf("\033[3%dm[%d %c]%s ", (c.naipe-'a')+1, c.numero, c.naipe, C_GRAY);
         }
         printf("\n\n");
 
@@ -191,11 +198,11 @@ int main(void)
             if (c.naipe == escolhida.naipe || c.numero <= escolhida.numero)
             {
                 Li_inserirInicio(removidos, c);
-                printf("A carta [%d %c] foi para a coleção!\n", c.numero, c.naipe);
+                printf("A carta \033[3%dm[%d %c]%s foi para a coleção!\n", (c.naipe-'a')+1, c.numero, c.naipe, C_GRAY);
             }
         }
 
-        if (Li_quantidade(removidos) == 0) printf("Nenhuma carta foi para a coleção!\n");
+        if (Li_quantidade(removidos) == 0) printf("%sNenhuma carta foi para a coleção!%s\n", C_RED, C_GRAY);
 
         // removendo as cartas da mesa e inserindo nas coleções:
         while (Li_quantidade(removidos) > 0)
@@ -223,7 +230,7 @@ int main(void)
                 printf("Ultima Rodada, jogador com 4 cartas\n");
         }
         while(getchar() != '\n');
-    }
+    }   // Aqui se encerra o While do jogo
 
     switch (vencedor)
     {
@@ -232,9 +239,9 @@ int main(void)
     }
 
     // Imprimindo a coleção:
-    printf("\nColeção Jogador:");
+    printf("\n%sColeção Jogador:", C_CYAN);
     imprimirColecao(colecaoJogador);
-    printf("\n\nColeção Computador:");
+    printf("\n\n%sColeção Computador:", C_CYAN);
     imprimirColecao(colecaoComputador);
 
     while(getchar() != '\n');

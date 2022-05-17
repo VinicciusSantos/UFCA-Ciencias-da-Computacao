@@ -1,10 +1,10 @@
 /*****************************EFECTS***************************************/
-#define NONE        "\033[0m"
-#define BOLD        "\033[1m"
-#define HALFBRIGHT  "\033[2m"
-#define UNDERSCORE  "\033[4m"
-#define BLINK       "\033[5m"
-#define REVERSE     "\033[7m"
+#define C_NONE        "\033[0m"
+#define C_BOLD        "\033[1m"
+#define C_HALFBRIGHT  "\033[2m"
+#define C_UNDERSCORE  "\033[4m"
+#define C_BLINK       "\033[5m"
+#define C_REVERSE     "\033[7m"
 
 /*****************************COLORS***************************************/
 #define C_BLACK     "\033[30m"

@@ -68,7 +68,7 @@ void Li_imprimir(Lista * li)
 
     while (aux != NULL)
     {
-        printf("%s[%d %c]%s ", C_CYAN, aux->car.numero, aux->car.naipe, C_GRAY);
+        printf("\033[3%dm[%d %c]%s ", (aux->car.naipe-'a')+1, aux->car.numero, aux->car.naipe, C_GRAY);
         if (aux->proximo != NULL) printf("-> ");
         aux = aux->proximo;
     }
@@ -79,7 +79,7 @@ int Li_removerQualquer(Lista * li, struct carta carta)
 {
     if (li == NULL)
     {
-        printf("Não foi possível acessar a lista\n");
+        // printf("Não foi possível acessar a lista\n");
         return 1;
     }
 
@@ -95,7 +95,7 @@ int Li_removerQualquer(Lista * li, struct carta carta)
 
     if (aux == NULL || anterior == NULL)
     {
-        printf("Não foi possível imprimir\n");
+        // printf("Não foi possível imprimir\n");
         return 2;
     }
 
@@ -146,7 +146,7 @@ struct carta Li_acessarIndice(Lista * li, int indice)
         aux = aux->proximo;
     }
 
-    printf("Carta não encontrada!\n");
+    // printf("Carta não encontrada!\n");
     return c;
 }
 
@@ -176,7 +176,7 @@ int Li_somaValores(Lista *li)
 {
     if (li == NULL)
     {
-        printf("Não foi possível acessar a lista\n");
+        // printf("Não foi possível acessar a lista\n");
         return -1;
     }
 
