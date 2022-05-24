@@ -167,3 +167,18 @@ void Pi_embaralhar(Pilha *pi)
         Pi_InserirIndice(pi, Pi_remover(pi), rand() % Pi_tamanho(pi));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

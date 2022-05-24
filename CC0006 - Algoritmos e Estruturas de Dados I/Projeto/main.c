@@ -8,7 +8,7 @@
 
 # define QUANT_NAIPES 6
 # define QUANT_CARTAS 5
-# define CARTASPORNAIPE 4
+# define CARTASPORNAIPE 11
 # define QUANT_MAO 5
 # define QUANT_MESA 5
 
@@ -47,10 +47,7 @@ int main(void)
 
     // Pegando as 5 cartas da mão:
     Lista *mao = Li_criar();
-    for (int i = 0; i < QUANT_MAO; i++)
-    {
-        Li_inserirInicio(mao, Pi_remover(baralho));
-    }
+    for (int i = 0; i < QUANT_MAO; i++) Li_inserirInicio(mao, Pi_remover(baralho));
 
     Lista **colecaoJogador;
     colecaoJogador = (Lista**)malloc(sizeof(Lista*)*QUANT_NAIPES);
