@@ -43,5 +43,6 @@ int main(){
     char a[5] = "Paulo";
     inverterString(a, 0, 4);
     printf("%s\n", a);
+    printf("Pot: %d\n", pot(2, 10));
 }
 
