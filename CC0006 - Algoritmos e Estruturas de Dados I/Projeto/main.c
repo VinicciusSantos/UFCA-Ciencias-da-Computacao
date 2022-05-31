@@ -12,7 +12,7 @@
 # define QUANT_MAO 5
 # define QUANT_MESA 5
 
-// cd Documentos/GitHub/UFCA-Ciencias-da-Computacao/CC0006\ -\ Algoritmos\ e\ Estruturas\ de\ Dados\ I/Projeto/ && gcc -c main.c lista.c pilha.c && gcc -o main main.o lista.o pilha.o && ./main
+// cd Documentos/GitHub/UFCA-Ciencias-da-Computacao/CC0006\ -\ Algoritmos\ e\ Estruturas\ de\ Dados\ I/Projeto/ && gcc -c *.c && gcc -c main *.o && ./main
 
 void imprimirColecao(Lista** colecao)
 {
